@@ -1,5 +1,5 @@
-import com.sun.net.httpserver.Authenticator.Failure
-
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.collection.mutable
 import scala.concurrent.duration.{Duration, SECONDS}
 import scala.concurrent.{Await, Future}
