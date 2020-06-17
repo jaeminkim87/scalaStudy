@@ -1,0 +1,7 @@
+name := "scala_study"
+
+version := "0.1"
+
+scalaVersion := "2.13.1"
+
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.3.0"
