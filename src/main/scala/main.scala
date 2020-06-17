@@ -1,6 +1,9 @@
 import com.sun.net.httpserver.Authenticator.Failure
 
 import scala.collection.mutable
+import scala.concurrent.duration.{Duration, SECONDS}
+import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Success}
 
 object main extends App {
   @annotation.tailrec
@@ -86,4 +89,22 @@ object main extends App {
     }
   }
   println(checkProperty(""))
+
+  //6
+  val commits = Future sequence Seq(
+    Future(GetGitHubCommits.get("jaeminkim87", "flask_docker_study")),
+    Future(GetGitHubCommits.get("jaeminkim87", "uber_clone"))
+  )
+
+  Await.result(commits, Duration(5, SECONDS))
+
+  commits.onComplete {
+    case Success(value) => value.foreach(commit => commit.foreach(list => {
+      println("========================")
+      println(s"title : ${list._2.trim}")
+      println(s"author : ${list._1.trim.replace(" ","").replace("\n", " ")}")
+      println(s"updated : ${list._3.trim}")
+    }))
+    case Failure(exception) => println(exception)
+  }
 }
