@@ -34,7 +34,7 @@ object GetGitHubCommits {
     val url = init(userName, repoName, branchName)
     val xml = getXML(url)
     val entry = getXMLParser(xml)
-    val authors = entry.flatMap(child => (child \\ "author").map(_.text))
+    val authors = entry.flatMap(child => (child \\ "author" \ "name").map(_.text))
     val titles = entry.flatMap(child => (child \\ "title").map(_.text))
     val dates = entry.flatMap(child => (child \\ "updated").map(a => changeUTCtoDate(a.text)))
     val info = authors zip titles zip dates

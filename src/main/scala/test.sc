@@ -46,3 +46,14 @@ b.append(5)
 
 println(b)
 println(s)
+
+def checkDouble(a:String) = a.toDoubleOption
+def forProduct(a:String, b: String) = {
+  for {
+    a1 <- checkDouble(a)
+    b1 <- checkDouble(b)
+  }
+    yield a1 * b1
+}
+
+println(forProduct("3", "4"))
