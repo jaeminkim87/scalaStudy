@@ -1,5 +1,5 @@
 import scala.concurrent.ExecutionContext.Implicits.global
-
+import scala.concurrent.Future
 import scala.collection.mutable
 import scala.concurrent.duration.{Duration, SECONDS}
 import scala.concurrent.{Await, Future}
@@ -98,13 +98,23 @@ object main extends App {
 
   Await.result(commits, Duration(5, SECONDS))
 
-  commits.onComplete {
+  /*commits.onComplete {
     case Success(value) => value.foreach(commit => commit.foreach(list => {
       println("========================")
       println(s"title : ${list._2.trim}")
       println(s"author : ${list._1.trim.replace(" ","").replace("\n", " ")}")
       println(s"updated : ${list._3.trim}")
     }))
+    case Failure(exception) => println(exception)
+  }*/
+
+  commits.onComplete {
+    case Success(value) => value.flatten.sortWith(_._2 < _._2).foreach(list => {
+      println("========================")
+      println(s"title : ${list._2.trim}")
+      println(s"author : ${list._1.trim}")
+      println(s"updated : ${list._3.trim}")
+    })
     case Failure(exception) => println(exception)
   }
 }
