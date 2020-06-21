@@ -46,8 +46,8 @@ object main extends App {
   val list = s.take(100).toList
   //println(list)
 
-  val interatorList = list grouped 10 map (_.mkString(","))
-  println(interatorList foreach println)
+  val iteratorList = list grouped 10 map (_.mkString(","))
+  println(iteratorList foreach println)
 
   // 1-d
   def fibNext(element: Int):Option[BigInt] = {
